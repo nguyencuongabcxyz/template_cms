@@ -3,7 +3,7 @@ import {
   Container,  
   CssBaseline, 
 } from "@material-ui/core";
-import LoginForm from "../components/loginForm/LoginForm";
+import LoginForm from "../../components/loginForm/LoginForm";
 
 export default function AuthPage() {
   return (
