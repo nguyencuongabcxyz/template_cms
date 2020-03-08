@@ -3,7 +3,6 @@ import {
   Box,
   Typography,
   TextField,
-  CssBaseline,
   Avatar,
   FormControlLabel,
   Checkbox,
@@ -13,29 +12,37 @@ import {
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import classes from "./LoginForm.style";
+import CTextInput from "../../../shared/components/cTextInput/CTextInput";
+import { usernameValidator } from "../../../shared/validator";
 
-export default function LoginForm() {
+interface ILoginFormProps{
+  isHidden: boolean | undefined;
+  switchToSignUpFrom: () => void;
+}
+
+export default function LoginForm(props: ILoginFormProps) {
+
+  const {isHidden, switchToSignUpFrom, ...rest} = props;
+
   return(
-    <Box>
-      <CssBaseline />
+    <Box {...rest} hidden={isHidden}>
       <Box className={classes().paper}>
         <Avatar className={classes().avatar}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
-                    Sign in
-        </Typography>
+        <Typography component="h1" variant="h5">Sign in</Typography>
         <form className={classes().form} noValidate>
-          <TextField
-            variant="outlined"
+          <CTextInput
             margin="normal"
             required
             fullWidth
-            id="email"
             label="Email Address"
             name="email"
             autoComplete="email"
             autoFocus
+            validator={usernameValidator}
+            value={"cuongnguyen@gmail.com"}
+            onTextChanged={(e) => {console.log(e.target.value);}}
           />
           <TextField
             variant="outlined"
@@ -45,7 +52,6 @@ export default function LoginForm() {
             name="password"
             label="Password"
             type="password"
-            id="password"
             autoComplete="current-password"
           />
           <FormControlLabel
@@ -58,17 +64,13 @@ export default function LoginForm() {
             variant="contained"
             color="primary"
             className={classes().submit}
-          >
-                        Sign In
-          </Button>
+          >Sign In</Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                                Forgot password?
-              </Link>
+              <Link href="#" variant="body2">Forgot password?</Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2" onClick={switchToSignUpFrom}>
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
